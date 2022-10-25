@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+input {
+  height: 35px;
+  font-size: 18px;
+}
+
+.input-container {
+  width: 80%;
+  display: grid;
+  grid-template-columns: 30% 70%;
+  grid-template-rows: auto;
+  padding: 1rem;
+}
