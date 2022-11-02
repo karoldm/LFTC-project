@@ -28,7 +28,9 @@ function getGrammar() {
 
   for (i = 0; i <= inputCount; i++) {
     left = document.querySelector(`#left-input-${i}`);
-    grammar[left.value] = [];
+    if (left.value.trim() !== '') {
+      grammar[left.value] = [];
+    }
   }
 
   for (i = 0; i <= inputCount; i++) {
