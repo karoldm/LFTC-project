@@ -24,8 +24,8 @@ input {
   gap: 2rem;
   overflow-y: scroll;
   padding: 2rem;
-  background-color: lightgray;
-  border: lightgray solid 2rem;
+  background-color: #0a7ff5;
+  border: #0a7ff5 solid 2rem;
   border-radius: 8px;
 }
 
@@ -39,6 +39,8 @@ input {
 
 .input-container>input {
   width: 100%;
+  border-radius: 4px;
+  padding: 0 0.5rem;
 }
 
 #valid-expression-container {
@@ -51,7 +53,10 @@ input {
 
 #valid-expression-container>input {
   width: 70%;
+  height: 2.3rem;
   border: solid black 1px;
+  border-radius: 4px;
+  padding: 0 0.5rem;
 }
 
 #valid-button {
@@ -60,7 +65,7 @@ input {
   border: none;
   border-radius: 5px;
   color: white;
-  background-color: darkgrey;
+  background-color: #fc1c1c;
 }
 
 #valid-button:hover {
@@ -76,10 +81,10 @@ input {
 }
 
 #add-row-button {
-  height: 35px;
-  width: 35px;
+  height: 40px;
+  width: 40px;
   border: none;
-  background-color: darkgrey;
+  background-color: #2b9e28;
   color: white;
   border-radius: 5px;
 }

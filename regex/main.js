@@ -11,15 +11,15 @@ function validRegex() {
   let pattern = new RegExp(expressao_regular_input.value);
 
   if (pattern.test(text_1_input.value)) {
-    text_1_input.style.backgroundColor = 'green';
+    text_1_input.style.backgroundColor = '#67d658';
   }
   else {
-    text_1_input.style.backgroundColor = 'red';
+    text_1_input.style.backgroundColor = '#fc5142';
   }
   if (pattern.test(text_2_input.value)) {
-    text_2_input.style.backgroundColor = 'green';
+    text_2_input.style.backgroundColor = '#67d658';
   }
   else {
-    text_2_input.style.backgroundColor = 'red';
+    text_2_input.style.backgroundColor = '#fc5142';
   }
 }
