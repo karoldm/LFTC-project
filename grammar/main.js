@@ -3,8 +3,24 @@ let validButton = document.querySelector("#valid-button");
 let addRowButton = document.querySelector("#add-row-button");
 let containerInputs = document.querySelector("#inputs-container");
 let validExpressionInput = document.querySelector("#valid-expression-input");
+let clearButton = document.querySelector("#clear-button");
 
 let inputCount = 0;
+
+clearButton.addEventListener("click", () => {
+  containerInputs.innerHTML = "";
+  inputCount = 0;
+
+  const htmlNewRow = document.createElement('div');
+  htmlNewRow.className = 'input-container';
+  htmlNewRow.innerHTML = //Adicionando nova linha de inputs 
+    `<input id="left-input-${inputCount}" />
+    <img src="../assets/right-arrow.png" alt="arrow right icon" />
+    <input id="right-input-${inputCount}" />`;
+
+  containerInputs.appendChild(htmlNewRow);
+
+});
 
 addRowButton.addEventListener("click", () => {
   inputCount++;
