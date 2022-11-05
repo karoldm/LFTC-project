@@ -98,19 +98,20 @@ function validExpression(grammar, current, word) {
       console.log(`terminal ${terminal} e não terminal ${nonTerminal}`);
 
       if (!nonTerminal && terminal === word[0]) { //Se só possui um terminal, e o símbolo é igual a ele
-        word = word.substr(1); //decrementamos o símbolo
-        if (word.length === 0) return true; //se era o único símbolo na expressão então ela é validada
+        word1 = word.substr(1); //decrementamos o símbolo e armazena em uma nova string 
+        /*A String atual não pode ser modificada pois precisamos dela para testar todas as outras possibilidades*/
+        if (word1.length === 0) return true; //se era o único símbolo na expressão então ela é validada
       }
 
-      else if (terminal && nonTerminal && word[0] === terminal) { //Se terminal seguido de não terminal
-        word = word.substr(1); //decrementa o símbolo encontrada no inicio 
-        return validExpression(grammar, nonTerminal, word); //validando o próxima símbolo
+      if (!terminal && nonTerminal) { //Se só possui um não terminal, apenas partimos para as derivações desse não terminal
+        if (validExpression(grammar, nonTerminal, word)) return true;
       }
-      else if (!terminal && nonTerminal) { //Se só possui um não terminal, apenas partimos para as derivações desse não terminal
-        return validExpression(grammar, nonTerminal, word);
+
+      if (terminal && nonTerminal && word[0] === terminal) { //Se terminal seguido de não terminal
+        let word1 = word.substr(1); //decrementa o símbolo encontrada no inicio 
+        if (validExpression(grammar, nonTerminal, word1)) return true; //validando o próxima símbolo
       }
     }
-
   }
 
   return false;
