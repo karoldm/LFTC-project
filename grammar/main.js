@@ -20,6 +20,8 @@ clearButton.addEventListener("click", () => {
 
   containerInputs.appendChild(htmlNewRow);
 
+  validExpressionInput.value = "";
+
 });
 
 addRowButton.addEventListener("click", () => {
