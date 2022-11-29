@@ -94,26 +94,19 @@ function validExpression(grammar, current, word) {
     if (grammar[current][i] != '') {
       let result = grammar[current][i].split(''); //A gramática é GLUD, logo UM terminal seguido de um não terminal
 
-      console.log(i);
-      console.log(current);
-      console.log(grammar[current]);
-      console.log(grammar[current][i]);
-      console.log(word)
-
       let terminal;
       let nonTerminal;
 
       //Armazenando o terminal e o não terminal
-      if (result[0] === result[0].toLowerCase()) {
+      if (result.length === 2 && result[0] === result[0].toLowerCase()) {
         terminal = result[0];
         nonTerminal = result[1];
       }
       else {
-        terminal = result[1];
-        nonTerminal = result[0];
+        alert("Apenas gramáticas GLUD!");
+        validExpressionInput.value = "";
+        return -1;
       }
-
-      console.log(`terminal ${terminal} e não terminal ${nonTerminal}`);
 
       if (!nonTerminal && terminal === word[0]) { //Se só possui um terminal, e o símbolo é igual a ele
         word1 = word.substr(1); //decrementamos o símbolo e armazena em uma nova string 
@@ -152,12 +145,13 @@ validButton.addEventListener("click", () => {
     }
 
     else {
-      if (validExpression(grammar, first, word)) {
-        validExpressionInput.style.backgroundColor = "green";
-      }
-      else {
-        validExpressionInput.style.backgroundColor = "red";
-      }
+      if (validExpression(grammar, first, word) !== -1)
+        if (validExpression(grammar, first, word)) {
+          validExpressionInput.style.backgroundColor = "green";
+        }
+        else {
+          validExpressionInput.style.backgroundColor = "red";
+        }
     }
 
   }
