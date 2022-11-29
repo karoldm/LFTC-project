@@ -1,11 +1,29 @@
-let initialNode = null;
-let finalNodes = [];
-
-// Create the Diagram's Model:
-var nodeDataArray = [];
-var linkDataArray = [];
 
 function init() {
+
+    let initialNode = null;
+    let finalNodes = [];
+
+    // Create the Diagram's Model:
+    var nodeDataArray = [];
+    var linkDataArray = [];
+
+    const expressionButtonAf = document.querySelector("#expression-button-af");
+    const expressionInputAf = document.querySelector("#expression-input-af");
+
+    expressionButtonAf.addEventListener("click", () => {
+        const expression = expressionInputAf.value;
+
+        if (!expression.trim()) {
+            alert("Insira uma expressão para ser validad!");
+        }
+        else {
+            console.log(nodeDataArray);
+            console.log(linkDataArray);
+            console.log(initialNode);
+            console.log(finalNodes);
+        }
+    });
 
 
     // Since 2.2 you can also author concise templates with method chaining instead of GraphObject.make
@@ -16,7 +34,7 @@ function init() {
         $(go.Diagram, "myDiagramDiv",  // create a Diagram for the DIV HTML element
             {
                 // allow double-click in background to create a new node
-                "clickCreatingTool.archetypeNodeData": { text: "Node", color: "white" },
+                "clickCreatingTool.archetypeNodeData": { text: "q0", color: "yellow" },
 
                 // enable undo & redo
                 "undoManager.isEnabled": true

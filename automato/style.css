@@ -20,7 +20,7 @@ html {
 }
 
 #allSampleContent {
-  height: 90vh;
+  height: 80vh;
 }
 
 #sample {
@@ -38,4 +38,34 @@ html {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   cursor: auto;
   font: bold 14px sans-serif;
+}
+
+#expression-container-af {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+#expression-input-af {
+  width: 70%;
+  height: 1.5rem;
+  padding: 0.2rem;
+}
+
+#expression-button-af {
+  border: none;
+  background-color: green;
+  border-radius: 8px;
+  padding: 0.5rem 3.5rem;
+  color: white;
+  font-weight: bold;
+}
+
+#expression-button-af:hover {
+  cursor: pointer;
+  filter: opacity(0.8);
 }
