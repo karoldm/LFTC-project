@@ -1,3 +1,4 @@
+import { validExpression } from '../grammar/main';
 
 function init() {
 
@@ -18,10 +19,15 @@ function init() {
             alert("Insira uma expressão para ser validad!");
         }
         else {
+            let grammar = [];
+
+
+
             console.log(nodeDataArray);
             console.log(linkDataArray);
             console.log(initialNode);
             console.log(finalNodes);
+            validExpression(grammar, initial, expression);
         }
     });
 

@@ -21,6 +21,7 @@ clearButton.addEventListener("click", () => {
   containerInputs.appendChild(htmlNewRow);
 
   validExpressionInput.value = "";
+  validExpressionInput.style.backgroundColor = "white";
 
 });
 
@@ -44,14 +45,16 @@ function getGrammar() {
   let left = document.querySelector(`#left-input-0`);
   const first = left.value;
 
-  for (i = 0; i <= inputCount; i++) {
+  let right;
+
+  for (let i = 0; i <= inputCount; i++) {
     left = document.querySelector(`#left-input-${i}`);
     if (left.value.trim() !== '') {
       grammar[left.value] = [];
     }
   }
 
-  for (i = 0; i <= inputCount; i++) {
+  for (let i = 0; i <= inputCount; i++) {
     left = document.querySelector(`#left-input-${i}`);
     right = document.querySelector(`#right-input-${i}`);
 
@@ -80,7 +83,7 @@ function getGrammar() {
 function validExpression(grammar, current, word) {
 
   //Para cada possível derivação de um não terminal
-  for (i in grammar[current]) {
+  for (let i in grammar[current]) {
 
     /* Cada iteração que encontra um símbolo da expressão (word) decrementa esse símbolo
        Se a expressão tiver tamanho zero significa que todas os símbolos foram encontradas
@@ -98,7 +101,8 @@ function validExpression(grammar, current, word) {
       let nonTerminal;
 
       //Armazenando o terminal e o não terminal
-      if (result.length === 2 && result[0] === result[0].toLowerCase()) {
+      if ((result.length === 2 && result[0] === result[0].toLowerCase())
+        || (result.length === 1 && result[0] === result[0].toLowerCase())) {
         terminal = result[0];
         nonTerminal = result[1];
       }
@@ -109,7 +113,7 @@ function validExpression(grammar, current, word) {
       }
 
       if (!nonTerminal && terminal === word[0]) { //Se só possui um terminal, e o símbolo é igual a ele
-        word1 = word.substr(1); //decrementamos o símbolo e armazena em uma nova string 
+        let word1 = word.substr(1); //decrementamos o símbolo e armazena em uma nova string 
         /*A String atual não pode ser modificada pois precisamos dela para testar todas as outras possibilidades*/
         if (word1.length === 0) return true; //se era o único símbolo na expressão então ela é validada
       }
@@ -157,3 +161,5 @@ validButton.addEventListener("click", () => {
   }
 
 });
+
+export { validExpression };
