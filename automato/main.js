@@ -1,4 +1,4 @@
-import { validExpression } from '../grammar/main';
+import validExpression from "../grammar/validExpression.js";
 
 function init() {
 
@@ -21,13 +21,11 @@ function init() {
         else {
             let grammar = [];
 
-
-
             console.log(nodeDataArray);
             console.log(linkDataArray);
             console.log(initialNode);
             console.log(finalNodes);
-            validExpression(grammar, initial, expression);
+            // validExpression(grammar, initial, expression);
         }
     });
 
@@ -36,7 +34,7 @@ function init() {
     // For details, see https://gojs.net/latest/intro/buildingObjects.html
     const $ = go.GraphObject.make;  // for conciseness in defining templates
 
-    myDiagram =
+    let myDiagram =
         $(go.Diagram, "myDiagramDiv",  // create a Diagram for the DIV HTML element
             {
                 // allow double-click in background to create a new node
