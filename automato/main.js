@@ -19,12 +19,43 @@ function init() {
             alert("Insira uma expressão para ser validad!");
         }
         else {
-            let grammar = [];
+            let grammar = {};
 
-            console.log(nodeDataArray);
-            console.log(linkDataArray);
-            console.log(initialNode);
-            console.log(finalNodes);
+            for (let i in nodeDataArray) {
+                const node = nodeDataArray[i];
+                grammar[node.text] = [];
+            }
+
+            //se C é um estado final, então C -> "" (vazio)
+            for (let i in finalNodes) {
+                const node = nodeDataArray.filter(e => e.key === finalNodes[i]);
+                console.log(node);
+                grammar[node[0].text].push("");
+            }
+
+            for (let i in linkDataArray) {
+                const link = linkDataArray[i];
+
+                //recuperar estado que contem key = link.from
+                const nodeA = nodeDataArray.filter(e => e.key === link.from);
+                //recuperar estado que contem key = link.to
+                //como pode haver um estado q0 (from) indo para vários estados (to) percorremos cada um deles
+                //nodeB pode ser um array com size > 1
+                const nodeB = nodeDataArray.filter(e => e.key === link.to);
+
+                //se o a transição é vazia então um não terminal A deriva em um não terminal B sem um terminal
+                if (link.text === "") {
+                    grammar[nodeA[0].text].push(nodeB[0].text);
+                }
+                //se a transição é não vazia, então um não terminal A deriva em um terminal a seguido de um 
+                //não terminal B (GLUD: A -> aB)
+                else {
+                    grammar[nodeA[0].text].push(`${link.text}${nodeB[0].text}`);
+                }
+
+            }
+
+            console.log(grammar);
             // validExpression(grammar, initial, expression);
         }
     });
