@@ -83,13 +83,17 @@ function init() {
 
             }
 
+
             const initial = nodeDataArray.filter(e => e.key === initialNode)
 
+            // console.log(grammar);
+            // console.log(initial[0].text);
+
             if (validExpression(grammar, initial[0].text, expression)) {
-                expressionInputAf.style.backgroundColor = "green";
+                expressionInputAf.style.backgroundColor = "#67d658";
             }
             else {
-                expressionInputAf.style.backgroundColor = "red";
+                expressionInputAf.style.backgroundColor = "#fc5142";
             }
         }
     });
@@ -115,7 +119,7 @@ function init() {
         if (initialNode && initialNode === node.data.key) {
             myDiagram.startTransaction("makeInitial");
             const data = node.data;
-            myDiagram.model.setDataProperty(data, "color", "white");
+            myDiagram.model.setDataProperty(data, "fig", "Circle");
             myDiagram.commitTransaction("makeInitial");
             initialNode = data.key;
 
@@ -127,13 +131,13 @@ function init() {
             const currentInitialNode = myDiagram.findNodeForKey(initialNode);
             myDiagram.startTransaction("makeInitial");
             const data = currentInitialNode.data;
-            myDiagram.model.setDataProperty(data, "color", "white");
+            myDiagram.model.setDataProperty(data, "fig", "Circle");
             myDiagram.commitTransaction("makeInitial");
         }
 
         myDiagram.startTransaction("makeInitial");
         const data = node.data
-        myDiagram.model.setDataProperty(data, "color", "rgb(77, 255, 77)");
+        myDiagram.model.setDataProperty(data, "fig", "RoundedRectangle");
         myDiagram.commitTransaction("makeInitial");
         initialNode = data.key;
     }
@@ -142,7 +146,7 @@ function init() {
         const data = node.data;
         if (finalNodes.includes(data.key)) {
             myDiagram.startTransaction("makeFinal");
-            myDiagram.model.setDataProperty(data, "color", "white");
+            myDiagram.model.setDataProperty(data, "color", "yellow");
             myDiagram.commitTransaction("makeFinal");
 
             finalNodes = finalNodes.filter(e => e !== data.key);
@@ -199,15 +203,17 @@ function init() {
     // Dragging from the Shape will start drawing a new link.
     myDiagram.nodeTemplate =
         $(go.Node, "Auto",
+            { desiredSize: new go.Size(50, 50) },
             { locationSpot: go.Spot.Center },
             $(go.Shape, "Circle",
                 {
-                    fill: "white", // the default fill, if there is no data bound value
+                    fill: "yellow", // the default fill, if there is no data bound value
                     portId: "", cursor: "pointer",  // the Shape is the port, not the whole Node
                     // allow all kinds of links from and to this port
                     fromLinkable: true, fromLinkableSelfNode: true, fromLinkableDuplicates: true,
                     toLinkable: true, toLinkableSelfNode: true, toLinkableDuplicates: true
                 },
+                new go.Binding("figure", "fig"),
                 new go.Binding("fill", "color")),
             $(go.TextBlock,
                 {
