@@ -21,6 +21,35 @@ function init() {
         else {
             let grammar = {};
 
+            /**
+             * Como a função para validar gramática só aceita inputs da forma: aA 
+             * (termina seguido de não terminal) precisamos converter o texto dos estados inseridos 
+             * pelo usuário (que podem ser literalmente qualquer text) para alguma letra maiscula 
+             * do alfabeto. 
+             * Vale lembrar que a gramáica também só aceita 1 terminal, desse modo as transições não
+             * podem ter mais de uma letra/digito
+            */
+
+            //verificando transições
+            for (let i in linkDataArray) {
+                const link = linkDataArray[i];
+                if (link.text.length > 1) {
+                    alert("As transições só podem conter um único caractere!");
+                    return;
+                }
+            }
+
+            //convertendo para letra do alfabeto
+            const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+                'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+
+            for (let i in nodeDataArray) {
+                const node = nodeDataArray[i];
+                node.text = alphabet[i];
+            }
+
+            //iniciando estrutura para armazenar a gramática
             for (let i in nodeDataArray) {
                 const node = nodeDataArray[i];
                 grammar[node.text] = [];
@@ -29,7 +58,6 @@ function init() {
             //se C é um estado final, então C -> "" (vazio)
             for (let i in finalNodes) {
                 const node = nodeDataArray.filter(e => e.key === finalNodes[i]);
-                console.log(node);
                 grammar[node[0].text].push("");
             }
 
@@ -55,8 +83,14 @@ function init() {
 
             }
 
-            console.log(grammar);
-            // validExpression(grammar, initial, expression);
+            const initial = nodeDataArray.filter(e => e.key === initialNode)
+
+            if (validExpression(grammar, initial[0].text, expression)) {
+                expressionInputAf.style.backgroundColor = "green";
+            }
+            else {
+                expressionInputAf.style.backgroundColor = "red";
+            }
         }
     });
 
