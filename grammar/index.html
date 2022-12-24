@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="../global.css">
   <link rel="stylesheet" href="style.css">
   <title>Gramatica Regular</title>
+
+  <script src="https://unpkg.com/gojs@2.2.18/release/go.js"></script>
 </head>
 
 <body>
@@ -15,23 +17,37 @@
     <a href="../index.html"><img src="../assets/back.png" alt="back img" /></a>
     <strong>Gramática Regular (GLUD)</strong>
   </header>
-  <div class="container">
-    <div id="inputs-container">
-      <div class="input-container">
-        <input id="left-input-0" />
-        <img src="../assets/right-arrow.png" alt="arrow right icon" />
-        <input id="right-input-0" />
+
+  <div class="container-gr">
+    <div class="content-gr">
+      <div id="inputs-container">
+        <div class="input-container">
+          <input id="left-input-0" />
+          <img src="../assets/right-arrow.png" alt="arrow right icon" />
+          <input id="right-input-0" />
+        </div>
       </div>
+
+      <div id="add-row-container">
+        <button id="clear-button">Limpar</button>
+        <button id="add-row-button">+</button>
+      </div>
+
+      <div id="valid-expression-container">
+        <input id="valid-expression-input" />
+        <button id="valid-button">Validar</button>
+      </div>
+
     </div>
 
-    <div id="add-row-container">
-      <button id="clear-button">Limpar</button>
-      <button id="add-row-button">+</button>
-    </div>
-
-    <div id="valid-expression-container">
-      <input id="valid-expression-input" />
-      <button id="valid-button">Validar</button>
+    <div id="convert-container-gr">
+      <div id="convert-content-gr"></div>
+      <div id="button-container-gr">
+        <div class="button-container">
+          <button id="convert-gr-to-er">Converter para ER</button>
+          <button id="convert-gr-to-af">Converter para AF</button>
+        </div>
+      </div>
     </div>
   </div>
 

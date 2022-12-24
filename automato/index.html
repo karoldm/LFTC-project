@@ -19,22 +19,36 @@
     <strong>Automato Finito</strong>
   </header>
 
-  <div id="allSampleContent">
-    <div id="sample">
-      <div id="myDiagramDiv">
-        <canvas tabindex="0" width="398" height="398"
-          style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 398px; height: 398px; cursor: auto;">
-          This text is displayed if your browser does not support the Canvas HTML element.
-        </canvas>
+  <div id="container">
+    <div id="allSampleContent">
+
+      <div id="sample">
+        <div id="myDiagramDiv">
+          <canvas tabindex="0" width="398" height="398"
+            style="position: absolute; top: 0px; left: 0px; z-index: 2; user-select: none; touch-action: none; width: 398px; height: 398px; cursor: auto;">
+            This text is displayed if your browser does not support the Canvas HTML element.
+          </canvas>
+        </div>
+      </div>
+
+      <div id="expression-container-af">
+        <input id="expression-input-af" />
+        <button id="expression-button-af">Validar</button>
+      </div>
+
+    </div>
+
+    <div id="convert-container">
+      <div id="convert-content"></div>
+      <div class="button-container">
+        <button id="convert-af-to-gr">Converter para GR</button>
+        <button id="convert-af-to-er">Converter para ER</button>
       </div>
     </div>
 
-    <div id="expression-container-af">
-      <input id="expression-input-af" />
-      <button id="expression-button-af">Validar</button>
-    </div>
+  </div>
 
-    <script type="module" src="main.js"></script>
+  <script type="module" src="main.js"></script>
 
 </body>
 
