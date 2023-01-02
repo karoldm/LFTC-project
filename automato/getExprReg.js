@@ -1,12 +1,11 @@
 /**
-     * 
-     * @param {number} currState 
-     * @param {String[]} expressions 
-     * @param {Link[]} nextStates 
-     * @param {String} exprStr 
-     */
+ * 
+ * @param {number} currState 
+ * @param {String[]} expressions 
+ * @param {Link[]} nextStates 
+ * @param {String} exprStr 
+*/
 export default function getExprReg(currState, expressions, nextStates, exprStr, linksVisited, finalNodes, linkDataArray) {
-
     let exprArray = ["("];
     linksVisited.push(currState);
 
@@ -101,7 +100,7 @@ export default function getExprReg(currState, expressions, nextStates, exprStr, 
             let newCurrState = nextState.to;
             let newNextStates = linkDataArray.filter((link) => link.from === newCurrState);
 
-            getExprReg(newCurrState, expressions, newNextStates, newExprStr, linksVisited, finalNodes);
+            getExprReg(newCurrState, expressions, newNextStates, newExprStr, linksVisited, finalNodes, linkDataArray);
 
             //eliminando esse estado pq já chegamos ao final dele
             nextStates = nextStates.filter((link) => link.to !== nextState.to);
@@ -109,5 +108,6 @@ export default function getExprReg(currState, expressions, nextStates, exprStr, 
         }
 
     }
+
 
 }

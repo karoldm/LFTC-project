@@ -109,6 +109,7 @@ function init() {
         let currState = initialNode;
         let nextStates = linkDataArray.filter((link) => link.from == currState);
         let linksVisited = [];
+
         getExprReg(currState, expressions, nextStates, "", linksVisited, finalNodes, linkDataArray);
 
         convertContent.innerHTML = "";

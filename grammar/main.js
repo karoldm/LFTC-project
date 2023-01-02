@@ -1,5 +1,6 @@
 
 import validExpression from './validExpression.js';
+import getExprReg from '../automato/getExprReg.js';
 
 let validButton = document.querySelector("#valid-button");
 let addRowButton = document.querySelector("#add-row-button");
@@ -8,7 +9,52 @@ let validExpressionInput = document.querySelector("#valid-expression-input");
 let clearButton = document.querySelector("#clear-button");
 
 const convertToAF = document.querySelector("#convert-gr-to-af");
+const convertToER = document.querySelector("#convert-gr-to-er");
 const convertContent = document.querySelector("#convert-content-gr");
+
+var nodeDataArray = [];
+var linkDataArray = [];
+
+convertToER.addEventListener("click", () => {
+  nodeDataArray = [];
+  linkDataArray = [];
+  const { grammar, first } = getGrammar();
+  GRtoAF(grammar, first);
+
+  let finalNodes = [];
+
+  for (let i in nodeDataArray) {
+    if (nodeDataArray[i].color === 'red')
+      finalNodes.push(nodeDataArray[i].key)
+  }
+
+  console.log(linkDataArray)
+
+  let expressions = [];
+  let currState = nodeDataArray.filter((node) => node.text === first);
+  let nextStates = linkDataArray.filter((link) => link.from == currState[0].key);
+  let linksVisited = [];
+
+  console.log(finalNodes)
+
+  getExprReg(currState[0].key, expressions, nextStates, "", linksVisited, finalNodes, linkDataArray);
+
+  convertContent.innerHTML = "";
+  const htmlNewRow = document.createElement('div');
+
+  for (let i in expressions) {
+    if (expressions[i] === "") {
+      expressions[i] = 'ɛ';
+    }
+  }
+
+  if (expressions.length < 2)
+    htmlNewRow.innerHTML = expressions;
+  else
+    htmlNewRow.innerHTML = expressions.join("+");
+
+  convertContent.appendChild(htmlNewRow);
+});
 
 convertToAF.addEventListener("click", () => {
 
@@ -38,7 +84,8 @@ convertToAF.addEventListener("click", () => {
   `;
 
   convertContent.appendChild(htmlContent);
-  init(grammar, first);
+  GRtoAF(grammar, first);
+  init();
 
 });
 
@@ -144,10 +191,10 @@ validButton.addEventListener("click", () => {
 
 });
 
-function init(grammar, first) {
+function GRtoAF(grammar) {
   let key = 0;
-  var nodeDataArray = [];
-  var linkDataArray = [];
+  nodeDataArray = [];
+  linkDataArray = [];
 
   //convertendo gramatica para af
 
@@ -228,6 +275,10 @@ function init(grammar, first) {
   if (!finalStateUsed) {
     nodeDataArray.pop();
   }
+
+}
+
+function init() {
 
   const $ = go.GraphObject.make;  // for conciseness in defining templates
 
