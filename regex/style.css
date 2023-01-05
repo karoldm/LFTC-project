@@ -108,3 +108,17 @@ input {
   cursor: auto;
   font: bold 14px sans-serif;
 }
+
+#convert-content-er {
+  height: 100%;
+  width: 100%;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  width: 1rem;
+}

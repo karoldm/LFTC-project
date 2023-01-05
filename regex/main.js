@@ -12,6 +12,8 @@ const convertContent = document.querySelector("#convert-content-er");
 
 var nodeDataArray = [];
 var linkDataArray = [];
+var finalNodes = [];
+var initialNode;
 
 convertToAF.addEventListener("click", () => {
   let input = expressao_regular_input.value;
@@ -38,6 +40,121 @@ convertToAF.addEventListener("click", () => {
 
   convertContent.appendChild(htmlContent);
 
+  getAF(input);
+
+  init();
+
+});
+
+convertToGR.addEventListener("click", () => {
+  let input = expressao_regular_input.value;
+
+  if (!input) {
+    alert("Defina uma expressão!");
+    return;
+  }
+
+  getAF(input);
+
+  const { initial, grammar } = getGrammar();
+
+  convertContent.innerHTML = "";
+
+  convertContent.innerHTML = `<p>Inicial: ${initial[0].text}</p></br>`;
+
+  for (let G in grammar) {
+    for (let g in grammar[G]) {
+      const htmlNewRow = document.createElement('div');
+      htmlNewRow.innerHTML =
+        `<p>
+          ${G}  
+          <img src="../assets/right-arrow.png" alt="arrow right icon" /> 
+          ${grammar[G][g] ? grammar[G][g] : 'ε'}
+        <p/>
+        </br>`;
+
+      convertContent.appendChild(htmlNewRow);
+    }
+  }
+
+});
+
+const getGrammar = () => {
+  let grammar = {};
+
+  /**
+   * Como a função para validar gramática só aceita inputs da forma: aA 
+   * (termina seguido de não terminal) precisamos converter o texto dos estados inseridos 
+   * pelo usuário (que podem ser literalmente qualquer text) para alguma letra maiscula 
+   * do alfabeto. 
+   * Vale lembrar que a gramáica também só aceita 1 terminal, desse modo as transições não
+   * podem ter mais de uma letra/digito
+  */
+
+  //verificando transições
+  for (let i in linkDataArray) {
+    const link = linkDataArray[i];
+    if (link.text.length > 1) {
+      alert("As transições só podem conter um único caractere!");
+      return;
+    }
+  }
+
+  //convertendo para letra do alfabeto
+  const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+    'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+
+  for (let i in nodeDataArray) {
+    const node = nodeDataArray[i];
+    node.text = alphabet[i];
+  }
+
+  //iniciando estrutura para armazenar a gramática
+  for (let i in nodeDataArray) {
+    const node = nodeDataArray[i];
+    grammar[node.text] = [];
+  }
+
+  //se C é um estado final, então C -> "" (vazio)
+  for (let i in finalNodes) {
+    const node = nodeDataArray.filter(e => e.key === finalNodes[i]);
+    grammar[node[0].text].push("");
+  }
+
+  for (let i in linkDataArray) {
+    const link = linkDataArray[i];
+
+    //recuperar estado que contem key = link.from
+    const nodeA = nodeDataArray.filter(e => e.key === link.from);
+    //recuperar estado que contem key = link.to
+    //como pode haver um estado q0 (from) indo para vários estados (to) percorremos cada um deles
+    //nodeB pode ser um array com size > 1
+    const nodeB = nodeDataArray.filter(e => e.key === link.to);
+
+    //se o a transição é vazia então um não terminal A deriva em um não terminal B sem um terminal
+    if (link.text === "") {
+      grammar[nodeA[0].text].push(nodeB[0].text);
+    }
+    //se a transição é não vazia, então um não terminal A deriva em um terminal a seguido de um 
+    //não terminal B (GLUD: A -> aB)
+    else {
+      grammar[nodeA[0].text].push(`${link.text}${nodeB[0].text}`);
+    }
+
+  }
+
+
+  const initial = nodeDataArray.filter(e => e.key === initialNode)
+
+  return {
+    initial: initial,
+    grammar: grammar,
+  }
+}
+
+function getAF(input) {
+
   input = input.split("");
   if (input[0] === "^") input.shift();
   if (input[input.length - 1] === "$") input.pop();
@@ -48,6 +165,8 @@ convertToAF.addEventListener("click", () => {
   nodeDataArray = [{ key: key, text: alphabet[key], color: 'yellow' }];
   key++;
   linkDataArray = [];
+  finalNodes = [];
+
 
   let nodesOpen = [];
   let node = null;
@@ -111,11 +230,9 @@ convertToAF.addEventListener("click", () => {
   }
 
   nodeDataArray[nodeDataArray.length - 1].color = 'red';
-
-  init();
-
-});
-
+  finalNodes.push(nodeDataArray[nodeDataArray.length - 1].key);
+  initialNode = 0;
+}
 
 function validRegex() {
 
